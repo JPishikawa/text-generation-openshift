@@ -1,0 +1,18 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: text-generation-webui
+  namespace: text-gen
+  labels:
+    app: text-generation-webui
+spec:
+  to:
+    kind: Service
+    name: text-generation-webui
+    weight: 100
+  port:
+    targetPort: 7860-tcp
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

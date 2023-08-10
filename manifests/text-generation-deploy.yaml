@@ -1,0 +1,79 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: text-generation-webui
+  namespace: text-gen
+  labels:
+    app: text-generation-webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: text-generation-webui
+  template:
+    metadata:
+      labels:
+        app: text-generation-webui
+        deployment: text-generation-webui
+    spec:
+      volumes:
+        - name: characters
+          emptyDir: {}
+        - name: loras
+          emptyDir: {}
+        - name: models
+          persistentVolumeClaim:
+            claimName: models
+        - name: presets
+          emptyDir: {}
+        - name: prompts
+          emptyDir: {}
+        - name: training
+          emptyDir: {}
+      containers:
+        - resources:
+            limits:
+              nvidia.com/gpu: '1'
+          terminationMessagePath: /dev/termination-log
+          name: text-generation-webui
+          args:
+            - |
+              python3 /app/server.py --chat
+          env:
+            - name: EXTRA_LAUNCH_ARGS
+              value: '--listen --verbose'
+          ports:
+            - containerPort: 5000
+              protocol: TCP
+            - containerPort: 5005
+              protocol: TCP
+            - containerPort: 7860
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: characters
+              mountPath: /app/characters
+            - name: loras
+              mountPath: /app/loras
+            - name: models
+              mountPath: /app/models
+            - name: presets
+              mountPath: /app/presets
+            - name: prompts
+              mountPath: /app/prompts
+            - name: training
+              mountPath: /app/training
+          terminationMessagePolicy: File
+          image: docker.io/atinoda/text-generation-webui:default
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
