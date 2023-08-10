@@ -25,7 +25,7 @@ Get the URL to access the WebUI.
 echo https://$(oc get route text-generation-webui -o "jsonpath={.spec.host}" -n text-gen)
 ```
 
-## Model loading
+## Loading Model
 When you access the WebUI first time, there are no models loaded, so you need to download and load the model.  
 
 Open the model tab and enter the model repository name from HuggingFace.  
