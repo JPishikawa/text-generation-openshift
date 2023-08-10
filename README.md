@@ -4,7 +4,7 @@ This repository shows how to deploy [Text generation web UI](https://github.com/
 
 ## Prerequisite
 * OpenShift Cluster  
-  The cluster must include at least one GPU node that has enough vRAM to load LLM. For example, if you are using AWS g5.4xlarge (A10G, 24GiB), this can load [Llama-2-13B-chat-GPTQ](https://huggingface.co/TheBloke/Llama-2-13B-chat-GPTQ).  
+  The cluster must include at least one GPU node that has enough vRAM to load LLM. For example, if you are using AWS g5.4xlarge (A10G, 24GiB), this can load [Llama-2-13B-chat-GPTQ](https://huggingface.co/TheBloke/Llama-2-13B-chat-GPTQ). The use of spot instances is recommended to save costs.
 
 * NFD / GPU Operator  
   These operators need to be installed and their CRs should be created to use the GPU on the cluster.
