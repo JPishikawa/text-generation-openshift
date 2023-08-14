@@ -29,7 +29,8 @@ echo https://$(oc get route text-generation-webui -o "jsonpath={.spec.host}" -n 
 When you access the WebUI first time, there are no models loaded, so you need to download and load the model.  
 
 Open the model tab and enter the model repository name from HuggingFace.  
-(e.g. TheBloke/Llama-2-13B-chat-GPTQ) 
+(e.g. [TheBloke/Llama-2-13B-chat-GPTQ](https://huggingface.co/TheBloke/Llama-2-13B-chat-GPTQ))   
+The downloaded model will be stored in `/app/models` to which PV is attached.
 ![](png/download.png)
 
 Once the download completes, select that model and hit the load button.   
