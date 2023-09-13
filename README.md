@@ -17,6 +17,8 @@ It will create `text-gen` project on the cluster and other resources.
 git clone https://github.com/JPishikawa/text-generation-openshift
 
 cd text-generation-openshift
+oc apply -f manifests/text-generation-pj.yaml
+oc apply -f manifests/text-generation-scc.yaml
 oc apply -f manifests/
 ```
 
